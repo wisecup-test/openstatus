@@ -1,0 +1,29 @@
+# Enforce Zod Schema Validation for All Protected Procedure Inputs: Input Schemas Specify
+
+These rules are ALWAYS ACTIVE for all tRPC protected procedures that accept external input parameters, including public API endpoints exposed through router definitions and procedures that construct database queries using input parameters.
+
+### Rules
+
+- **R-INPUT-001** MUST: Input schemas MUST specify explicit types for all parameters including strings, numbers, dates, enums, arrays, and objects with nested validation rules.
+
+### Verify
+
+```bash
+# Discover the project's test execution script in the dependency manifest and run the test suite targeting router modules to verify schema validation coverage
+npm test -- --testPathPattern=router
+
+# Locate the project's static analysis configuration and execute the type checker to confirm all procedure input parameters have corresponding schema declarations
+npm run type-check
+
+# Search the codebase for protected procedures and verify each procedure that accepts input parameters includes a schema validation declaration before business logic execution
+grep -r "procedure(" src/ | grep -v "\.test\." | head -20
+```
+
+**Accept when:**
+- All protected procedures that accept input parameters include schema validation declarations at procedure boundaries
+- Test suite includes validation tests that verify schemas reject invalid input types, missing required fields, and out-of-range enum values
+- Static analysis confirms no database queries are constructed using unvalidated input parameters from procedure inputs
+
+<enforcement>
+Claude Code MUST NOT skip or defer verification. All protected procedures must be audited for schema validation presence before merging.
+</enforcement>
