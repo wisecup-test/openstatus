@@ -1,0 +1,41 @@
+---
+version: 2
+name: cross-cutting-composite-user-interface-block-component-1cf6
+description: "Adoption of @openstatus/ui Component Library: Composite User Interface Block Components Import"
+metadata:
+  actual:
+    adr_id: 1cf6b715-f9b0-4d15-9e8c-207a8170daeb
+    status: accepted
+    candidate_group_id: 9ee8de6e-eefa-477b-b480-83f4f7bb50f2
+    evidence:
+      source: deep
+  scope:
+    root: packages/ui
+    paths:
+      - src/components/blocks/**
+---
+
+# Adoption of @openstatus/ui Component Library: Composite User Interface Block Components Import
+
+Scope: applies to `packages/ui/src/components/blocks/**`.
+
+These rules are ALWAYS ACTIVE for all files matching the configured scope.
+
+### Rules
+
+- **R-UI-001** MUST: All composite user interface block components MUST import and compose user interface primitives and utilities exclusively from @openstatus/ui.
+
+### Verify
+
+```bash
+# Discover the project dependency manifest and verification scripts, then execute workspace static analysis and linting suite
+# Discover and run the project type checker across all interface packages to validate component property and interface contract compliance
+```
+
+**Accept when:**
+- Static analysis validates that all composite interface primitives are imported directly from @openstatus/ui without unapproved direct third-party UI dependencies.
+- The project type checking and component verification suites execute without errors across all consuming modules.
+
+<enforcement>
+Claude Code MUST NOT skip or defer verification. Verification is mandatory.
+</enforcement>

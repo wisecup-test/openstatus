@@ -1,0 +1,42 @@
+---
+version: 2
+name: cross-cutting-enforce-uniqueness-constraints-integrati-6096
+description: "drizzle-orm/sqlite-core Relational Schema and Indexing for Integration Boundaries: Enforce Uniqueness Constraints Integration Boundary Relations"
+metadata:
+  actual:
+    adr_id: 609600e4-247d-4c9e-b940-88e21d354531
+    status: accepted
+    candidate_group_id: beb1e334-963d-4d7e-92c8-5bf018e37015
+    evidence:
+      source: deep
+  scope:
+    root: packages/db
+    paths:
+      - src/schema/**
+---
+
+# drizzle-orm/sqlite-core Relational Schema and Indexing for Integration Boundaries: Enforce Uniqueness Constraints Integration Boundary Relations
+
+Scope: applies to `packages/db/src/schema/**`.
+
+These rules are ALWAYS ACTIVE for all files matching the configured scope.
+
+### Rules
+
+- **R-DB-001** MUST: Enforce uniqueness constraints on integration boundary relations via uniqueIndex or unique declarations to prevent duplicate event state transitions.
+
+### Verify
+
+```bash
+# Discover and execute the project database schema check script to validate index definitions
+# Discover and execute the project test runner to verify schema constraint and query performance tests
+```
+
+**Accept when:**
+- All schema definitions declare explicit indexes for tenant and event queries
+- Schema verification checks pass without missing index warnings or type errors
+- Integration event lookups adhere to indexed column ordering
+
+<enforcement>
+Claude Code MUST NOT skip or defer verification.
+</enforcement>
