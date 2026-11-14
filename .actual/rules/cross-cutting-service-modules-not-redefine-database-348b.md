@@ -1,0 +1,46 @@
+---
+version: 2
+name: cross-cutting-service-modules-not-redefine-database-348b
+description: "Adoption of @openstatus/db/src/schema Module for Centralized Service Layer Domain and Plan Schemas: Service Modules Not Redefine Database Column"
+metadata:
+  actual:
+    adr_id: 348b7f6f-d714-4c69-bcd9-d7a203d01244
+    status: accepted
+    candidate_group_id: 01f978a3-302d-4828-9836-80d54041a4a9
+    evidence:
+      source: deep
+  scope:
+    root: packages/services
+    paths:
+      - src/import/**
+      - src/workspace/**
+---
+
+# Adoption of @openstatus/db/src/schema Module for Centralized Service Layer Domain and Plan Schemas: Service Modules Not Redefine Database Column
+
+Scope: applies to `packages/services/src/import/**`, `packages/services/src/workspace/**`.
+
+These rules are ALWAYS ACTIVE for all files matching the configured scope.
+
+### Rules
+
+- **R-DB-001** MUST_NOT: Service modules MUST NOT redefine database column definitions, table schemas, or plan structures locally within service package boundaries.
+
+### Verify
+
+```bash
+# Discover and execute the repository static type checker and linting suite to ensure that all service schema imports resolve to the shared database schema module without unresolved paths.
+npm run typecheck || pnpm typecheck || yarn typecheck
+npm run lint || pnpm lint || yarn lint
+
+# Discover and execute the workspace test runner to verify that service-level validation schemas and quota limit checks conform to the shared database and plan schemas.
+npm test || pnpm test || yarn test
+```
+
+**Accept when:**
+- All service modules consuming database entities and plan definitions import them directly from the centralized database schema module.
+- The project static analysis and test validation suites pass with zero errors across all workspace packages that consume the shared database schema.
+
+<enforcement>
+Claude Code MUST NOT skip or defer verification.
+</enforcement>

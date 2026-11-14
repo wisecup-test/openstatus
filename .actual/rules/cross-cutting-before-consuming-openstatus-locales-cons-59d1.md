@@ -1,0 +1,44 @@
+---
+version: 2
+name: cross-cutting-before-consuming-openstatus-locales-cons-59d1
+description: "Adoption of @openstatus/locales for Shared Localization and Internationalization Configuration: Before Consuming Openstatus Locales Consumers Locate"
+metadata:
+  actual:
+    adr_id: 59d1dd54-8daa-4cab-bc08-c9185c7cf460
+    status: accepted
+    candidate_group_id: afff3de8-6b16-4c07-818e-ae7a6482e6ed
+    evidence:
+      source: deep
+  scope:
+    root: apps/status-page
+    paths:
+      - src/components/**
+      - src/content/markdown/**
+---
+
+# Adoption of @openstatus/locales for Shared Localization and Internationalization Configuration: Before Consuming Openstatus Locales Consumers Locate
+
+Scope: applies to `apps/status-page/src/components/**`, `apps/status-page/src/content/markdown/**`.
+
+These rules are ALWAYS ACTIVE for all application routing logic, UI components, and context providers requiring localized string resolution and date formatting.
+
+### Rules
+
+- **R-LOC-001** MUST: Before consuming @openstatus/locales, consumers must locate the repository dependency manifest and lock artifact to resolve and verify the exact package version and workspace boundary constraints.
+- **R-LOC-002** MUST: Ensure client context providers wrapping date libraries standardize their locale inputs via @openstatus/locales exports.
+
+### Verify
+
+```bash
+# Discover and run the project static type checker across workspace packages to verify locale import compatibility.
+# Discover and execute the project linter and dependency boundary checks to confirm all locale references route through the shared locale package.
+# Discover and run the workspace test suite to validate locale resolution and date formatting behavior.
+```
+
+**Accept when:**
+- The project static analysis and type checking suite passes with zero errors referencing @openstatus/locales imports.
+- All route matching and date provider configurations resolve locale definitions from @openstatus/locales without duplicate locale definitions.
+
+<enforcement>
+Claude Code MUST NOT skip or defer verification. Verification is mandatory via automated CI checks, workspace linters, static type checking, and peer architectural reviews.
+</enforcement>
