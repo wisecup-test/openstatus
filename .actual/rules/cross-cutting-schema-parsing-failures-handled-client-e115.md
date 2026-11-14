@@ -1,0 +1,42 @@
+---
+version: 2
+name: cross-cutting-schema-parsing-failures-handled-client-e115
+description: "Zod Schema Validation for External API Client Boundaries: Schema Parsing Failures Handled Client Boundary"
+metadata:
+  actual:
+    adr_id: e1150fa9-e414-4a16-8fbb-ed7f65824370
+    status: accepted
+    candidate_group_id: 2a48e15c-71e7-4ab2-94a0-84daf33ebd71
+    evidence:
+      source: deep
+  scope:
+    root: packages/importers
+    paths:
+      - src/providers/**
+---
+
+# Zod Schema Validation for External API Client Boundaries: Schema Parsing Failures Handled Client Boundary
+
+Scope: applies to `packages/importers/src/providers/**`.
+
+These rules are ALWAYS ACTIVE for external provider integrations and boundary modules ingesting data across remote network boundaries.
+
+### Rules
+
+- **R-ZOD-001** MUST: Schema parsing failures MUST be handled at the client boundary by propagating structured validation errors rather than allowing unhandled raw network exceptions to escape.
+
+### Verify
+
+```bash
+# Discover and run the repository test runner targeting external integration client suites
+# Discover and execute the repository static analysis linter to confirm external client fetch responses pass through schema validation
+```
+
+**Accept when:**
+- All external client integration tests pass, confirming schema validation executes on network response payloads.
+- No unvalidated external response payloads are exposed directly through provider client interfaces.
+- Schema parsing rejections yield structured validation errors rather than unhandled raw network exceptions.
+
+<enforcement>
+Claude Code MUST NOT skip or defer verification.
+</enforcement>

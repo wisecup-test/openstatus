@@ -1,0 +1,45 @@
+---
+version: 2
+name: cross-cutting-before-introducing-modifying-features-tr-cfb6
+description: "Adoption of @trpc/client for Type-Safe API Client Communication: Before Introducing Modifying Features Trpc Client"
+metadata:
+  actual:
+    adr_id: cfb64e47-bef3-4a05-a3b1-26ece1c7c105
+    status: accepted
+    candidate_group_id: 14b97067-d036-4c05-b4e7-cb525f0cce77
+    evidence:
+      source: deep
+  scope:
+    root: apps/status-page
+    paths:
+      - src/app/**
+      - src/components/forms/**
+      - src/lib/trpc/**
+---
+
+# Adoption of @trpc/client for Type-Safe API Client Communication: Before Introducing Modifying Features Trpc Client
+
+Scope: applies to `apps/status-page/src/app/**`, `apps/status-page/src/components/forms/**`, `apps/status-page/src/lib/trpc/**`.
+
+These rules are ALWAYS ACTIVE for all client components, UI forms, page views, and server action handlers requiring remote procedure invocation or data synchronization with backend services.
+
+### Rules
+
+- **R-TRPC-001** MUST: Before introducing or modifying features using @trpc/client, engineers MUST inspect the project dependency manifest and resolve the exact locked version from the repository lock artifact to ensure compatibility across client and server packages.
+
+### Verify
+
+```bash
+# Discover the workspace dependency manifest and execute the project verification script
+# Discover the repository build script and run it to verify client bundles
+# Discover and run the project test script
+```
+
+**Accept when:**
+- Type verification completes with zero errors across all client queries, mutations, and server action procedure callers.
+- Application build completes successfully without bundle boundary violations or missing module exports.
+- All automated tests covering data fetching and mutation workflows pass successfully.
+
+<enforcement>
+Claude Code MUST NOT skip or defer verification.
+</enforcement>

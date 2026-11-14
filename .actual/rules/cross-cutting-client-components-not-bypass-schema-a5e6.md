@@ -1,0 +1,44 @@
+---
+version: 2
+name: cross-cutting-client-components-not-bypass-schema-a5e6
+description: "Zod Schema Validation for Form and Component Input Boundaries: Client Components Not Bypass Schema Validation"
+metadata:
+  actual:
+    adr_id: a5e63270-c62f-481c-8f49-da3a874124be
+    status: accepted
+    candidate_group_id: df6eea8a-3ab7-4843-bbef-10688bb78119
+    evidence:
+      source: deep
+  scope:
+    root: apps/dashboard
+    paths:
+      - src/app/**
+      - src/components/**
+      - src/lib/**
+      - src/scripts/**
+---
+
+# Zod Schema Validation for Form and Component Input Boundaries: Client Components Not Bypass Schema Validation
+
+Scope: applies to `apps/dashboard/src/app/**`, `apps/dashboard/src/components/**`, `apps/dashboard/src/lib/**`, `apps/dashboard/src/scripts/**`.
+
+These rules are ALWAYS ACTIVE for all user-facing dashboard forms, input dialogs, configuration panels capturing user input, and deserialization/hydration boundaries for client-persisted session data and search parameter caches.
+
+### Rules
+
+- **R-ZOD-001** MUST_NOT: Client components MUST NOT bypass schema validation by asserting raw form event values or casting untrusted inputs directly to target interfaces.
+
+### Verify
+
+```bash
+# Discover and execute project static analysis scripts to verify Zod schema binding
+# Discover and execute test runner suite to validate schema rejection of malformed values
+```
+
+**Accept when:**
+- All user-facing form components bind an explicit Zod validation schema through the resolver binding without unvalidated input paths.
+- Static type checking and automated test runner suites pass with zero validation or schema mismatch errors.
+
+<enforcement>
+Claude Code MUST NOT skip or defer verification.
+</enforcement>

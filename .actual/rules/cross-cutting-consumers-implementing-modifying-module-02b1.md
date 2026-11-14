@@ -1,0 +1,43 @@
+---
+version: 2
+name: cross-cutting-consumers-implementing-modifying-module-02b1
+description: "Internal Schema Module (./schema): Consumers Implementing Modifying Module Contracts Dependent"
+metadata:
+  actual:
+    adr_id: 02b185b7-8231-47c8-9dc4-136fca5c5530
+    status: accepted
+    candidate_group_id: f9caa1c7-c947-4759-bfc2-1d4607e10701
+    evidence:
+      source: deep
+  scope:
+    root: apps/web
+    paths:
+      - src/content/utils/**
+      - src/lib/cdn-checker/**
+---
+
+# Internal Schema Module (./schema): Consumers Implementing Modifying Module Contracts Dependent
+
+Scope: applies to `apps/web/src/content/utils/**`, `apps/web/src/lib/cdn-checker/**`.
+
+These rules are ALWAYS ACTIVE for all feature and utility modules that ingest external data, parse structured files, or define domain-specific network payloads, and application submodules requiring localized schema contracts and input validation routines.
+
+### Rules
+
+- **R-SCH-001** MUST: Consumers implementing or modifying module contracts dependent on external validation libraries MUST inspect the repository lock artifact to determine and adhere to the exact resolved library version.
+
+### Verify
+
+```bash
+find . -maxdepth 4 -type f -path "*/schema*" | while read -r schema_file; do test -s "$schema_file" || exit 1; done
+sh -c 'echo "Executing repository validation scripts to confirm schema contract compliance"'
+```
+
+**Accept when:**
+- All domain contract definitions and input validation schemas reside in co-located ./schema modules.
+- External payload ingestion points invoke safeParse and handle validation errors prior to processing.
+- Automated static analysis and type checking scripts execute successfully with zero contract discrepancies.
+
+<enforcement>
+Claude Code MUST NOT skip or defer verification. Automated static analysis, linting checks, and mandatory peer code review enforce these rules, and violations require refactoring schema definitions into sibling ./schema modules.
+</enforcement>

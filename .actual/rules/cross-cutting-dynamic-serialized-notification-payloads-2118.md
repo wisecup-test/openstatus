@@ -1,0 +1,43 @@
+---
+version: 2
+name: cross-cutting-dynamic-serialized-notification-payloads-2118
+description: "Zod Schema Validation for Ingress Notification Data and Environment Configuration: Dynamic Serialized Notification Payloads Ingested External"
+metadata:
+  actual:
+    adr_id: 2118ecfb-c814-4938-9e90-b751f419ef2e
+    status: accepted
+    candidate_group_id: f65abc81-591a-4ca8-812c-a6af3fbfd0fc
+    evidence:
+      source: deep
+  scope:
+    root: packages/notifications/twillio-sms
+    paths:
+      - src/**
+---
+
+# Zod Schema Validation for Ingress Notification Data and Environment Configuration: Dynamic Serialized Notification Payloads Ingested External
+
+Scope: applies to `packages/notifications/twillio-sms/src/**`.
+
+These rules are ALWAYS ACTIVE for all notification integration modules receiving serialized payload data from external or cross-service boundaries and all environment configuration modules initializing credentials and endpoints for external client integrations.
+
+### Rules
+
+- **R-ZOD-001** MUST: All dynamic serialized notification payloads ingested from external boundaries MUST be validated using Zod schema parse methods prior to data access.
+
+### Verify
+
+```bash
+# Discover and run the project type checking script to verify schema type inference across boundary consumers.
+# Discover and execute the project unit and integration test suite to validate boundary schema parsing and rejection behavior.
+# Discover and run the project linting and static analysis tool to detect unvalidated ingress payload parsing.
+```
+
+**Accept when:**
+- All boundary ingress payloads and environment configurations pass schema parsing before execution proceeds.
+- Static type checking verifies that downstream integration calls consume validated schema output types.
+- Automated verification suites confirm parsing failures halt execution with boundary errors prior to external dispatch.
+
+<enforcement>
+Claude Code MUST NOT skip or defer verification. Verification of schema validation across all boundary data ingress points is mandatory.
+</enforcement>

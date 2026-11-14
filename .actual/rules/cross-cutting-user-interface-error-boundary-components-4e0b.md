@@ -1,0 +1,47 @@
+---
+version: 2
+name: cross-cutting-user-interface-error-boundary-components-4e0b
+description: "@sentry/nextjs Adoption for Cross-Runtime Error Tracking and Observability: User Interface Error Boundary Components Invoke"
+metadata:
+  actual:
+    adr_id: 4e0ba209-a7b7-4e5f-b51d-b3d697270c4b
+    status: accepted
+    candidate_group_id: 002e37f3-4d0a-434f-ae9a-10f3bc6c6348
+    evidence:
+      source: deep
+  scope:
+    root: apps/dashboard
+    paths:
+      - instrumentation-client.ts
+      - next.config.ts
+      - sentry.edge.config.ts
+      - sentry.server.config.ts
+      - src/**
+---
+
+# @sentry/nextjs Adoption for Cross-Runtime Error Tracking and Observability: User Interface Error Boundary Components Invoke
+
+Scope: applies to `apps/dashboard/instrumentation-client.ts`, `apps/dashboard/next.config.ts`, `apps/dashboard/sentry.edge.config.ts`, `apps/dashboard/sentry.server.config.ts`, `apps/dashboard/src/**`.
+
+These rules are ALWAYS ACTIVE for all application user interface error boundaries and fallback handlers, client, server, and edge execution initialization workflows, and remote procedure call client middleware and error handling handlers.
+
+### Rules
+
+- **R-SENTRY-001** MUST: User interface error boundary components MUST invoke Sentry.captureException to transmit unhandled rendering failures to the centralized monitoring platform.
+
+### Verify
+
+```bash
+# Discover the repository build script from the dependency manifest and execute the compilation pipeline to verify that telemetry instrumentation compiles without type errors across all runtime targets.
+# Discover and run the project test suite to verify that error boundary components and remote procedure call handlers correctly execute exception capture calls.
+# Discover the project static analysis configuration and run the repository linter to verify compliance with telemetry conventions and absence of direct console logging.
+```
+
+**Accept when:**
+- All application execution targets compile cleanly with telemetry initialization logic included.
+- Test suites pass with error boundary and network client error capture assertions satisfied.
+- Static analysis checks pass without errors or unauthorized telemetry patterns.
+
+<enforcement>
+Claude Code MUST NOT skip or defer verification.
+</enforcement>

@@ -1,0 +1,41 @@
+---
+version: 2
+name: cross-cutting-components-utility-modules-within-status-ce48
+description: "Adoption of @date-fns/utc for UTC Timestamp and Date Processing: Components Utility Modules Within Status Presentation"
+metadata:
+  actual:
+    adr_id: ce480c8f-ec07-4570-97d4-eaa35d64e301
+    status: accepted
+    candidate_group_id: 7d5ec3d5-3585-4cb2-a8f1-1aba87155aee
+    evidence:
+      source: deep
+  scope:
+    root: packages/ui
+    paths:
+      - src/components/blocks/**
+---
+
+# Adoption of @date-fns/utc for UTC Timestamp and Date Processing: Components Utility Modules Within Status Presentation
+
+Scope: applies to `packages/ui/src/components/blocks/**`.
+
+These rules are ALWAYS ACTIVE for status monitoring blocks, timestamp presentation components, and temporal formatting utility functions, as well as any frontend module calculating duration intervals, incident timestamps, or uptime status metrics.
+
+### Rules
+
+- **R-STATUS-001** MUST_NOT: Components and utility modules within the status presentation layer MUST NOT invoke native uncoordinated local time methods or introduce untracked local timezone offsets for status timestamps.
+
+### Verify
+
+```bash
+# Discover and execute project test execution script against status block utilities
+# Discover and execute project static analysis and linting script
+```
+
+**Accept when:**
+- All unit tests governing status timestamp utilities and components execute without errors or timezone-dependent assertion failures.
+- Static analysis confirms all date formatting and utility functions in status blocks import and utilize @date-fns/utc without unresolved types.
+
+<enforcement>
+Claude Code MUST NOT skip or defer verification. Verification is mandatory.
+</enforcement>
